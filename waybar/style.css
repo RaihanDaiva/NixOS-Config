@@ -1,0 +1,120 @@
+@import url("/home/han/.cache/wal/colors-waybar.css");
+
+* {
+  font-size: 14px;
+  font-weight: bold;
+  font-family: Spleen, JetBrains Mono Nerd Font, monospace;
+  color: @color7;
+}
+
+window#waybar {
+  background-color: rgba(19, 25, 16, 0.85);
+  border-radius: 10px;
+  color: @color7;
+}
+
+.modules-left {
+  padding-left: 16px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.modules-right {
+  padding-right: 16px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.modules-center {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+/* OS Logo */
+#custom-os {
+  font-size: 16px;
+  color: @color1;
+  margin-right: 14px;
+}
+
+/* Workspaces */
+#workspaces {
+  padding: 0;
+}
+
+/* 1. Base / Workspace yang ada aplikasi (tapi sedang tidak difokuskan) */
+#workspaces button {
+  all: unset;
+  margin: 0 6px;
+  padding: 0 4px;
+  color: @color7;
+  opacity: 1.0;
+  transition: all 0.2s ease;
+}
+
+/* 2. Workspace kosong / tidak ada aplikasi */
+#workspaces button.persistent {
+  color: @color8;
+  opacity: 0.4;
+}
+
+/* 3. Workspace yang sedang dibuka / difokuskan */
+#workspaces button.focused {
+  color: @color1;
+  font-weight: bold;
+  opacity: 1.0;
+}
+
+#workspaces button.urgent {
+  color: #f38ba8;
+}
+
+#workspaces button:hover {
+  color: @color1;
+  opacity: 1.0;
+}
+
+/* Clock */
+#clock {
+  font-size: 14px;
+  font-weight: bold;
+  color: @color7;
+}
+
+/* Right Status Modules */
+#wireplumber,
+#network,
+#bluetooth,
+#battery {
+  margin-left: 14px;
+  margin-right: 4px;
+  font-size: 15px;
+  color: @color7;
+  transition: all 0.2s ease;
+}
+
+#wireplumber:hover,
+#network:hover,
+#bluetooth:hover,
+#battery:hover {
+  color: @color1;
+}
+
+#battery.warning {
+  color: #fab387;
+}
+
+#battery.critical {
+  color: #f38ba8;
+}
+
+/* Tooltip */
+tooltip {
+  background-color: @color0;
+  border: 1px solid @color1;
+  border-radius: 8px;
+}
+
+tooltip label {
+  color: @color7;
+}

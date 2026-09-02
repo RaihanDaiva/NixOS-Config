@@ -1,0 +1,90 @@
+{
+  "layer": "top",
+  "position": "top",
+  "margin-top": 8,
+  "margin-left": 350,
+  "margin-right": 350,
+  "margin-bottom": 0,
+  "reload_style_on_change": true,
+
+  "modules-left": [
+    "custom/os",
+    "sway/workspaces"
+  ],
+  "modules-center": [
+    "clock"
+  ],
+  "modules-right": [
+    "wireplumber",
+    "network",
+    "bluetooth",
+    "battery"
+  ],
+
+  "custom/os": {
+    "format": "",
+    "tooltip": false
+  },
+
+  "sway/workspaces": {
+    "disable-scroll": true,
+    "all-outputs": true,
+    "persistent-workspaces": {
+      "1": [],
+      "2": [],
+      "3": [],
+      "4": [],
+      "5": [],
+      "6": [],
+      "7": [],
+      "8": [],
+      "9": []
+    },
+    "format": "{name}"
+  },
+
+  "clock": {
+    "format": "{:%A %H:%M}",
+    "format-alt": "{:%A, %B %d, %Y}",
+    "tooltip-format": "<tt><small>{calendar}</small></tt>"
+  },
+
+  "wireplumber": {
+    "format": "{icon}",
+    "format-muted": "󰝟",
+    "format-icons": ["", "", ""],
+    "tooltip-format": "Volume: {volume}%",
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+  },
+
+  "network": {
+    "format-wifi": "{icon}",
+    "format-ethernet": "󰈀",
+    "format-disconnected": "󰤮",
+    "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+    "tooltip-format": "{essid} ({signalStrength}%)",
+    "on-click": "control --minimal --wifi"
+  },
+
+  "bluetooth": {
+    "format": "󰂲",
+    "format-on": "󰂯",
+    "format-off": "󰂲",
+    "format-disabled": "󰂲",
+    "format-connected": "󰂱",
+    "tooltip-format": "{controller_alias}\n{num_connections} connected",
+    "on-click": "control --minimal --bluetooth"
+  },
+
+  "battery": {
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{icon}",
+    "format-charging": "󰂄",
+    "format-plugged": "",
+    "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+    "tooltip-format": "{capacity}%"
+  }
+}
