@@ -6,8 +6,11 @@
 
 ### Variables
 #
+# Include pywal colors
+include ~/.cache/wal/colors-sway
+
 # Logo key. Use Mod1 for Alt.
-set $mod Mod1
+set $mod Mod4
 # Home row direction keys, like vim
 set $left h
 set $down j
@@ -16,7 +19,7 @@ set $right l
 # Your preferred terminal emulator
 set $term alacritty
 
-set $browser zen-browser
+set $browser firefox
 set $folder dolphin
 
 # Font
@@ -28,16 +31,19 @@ set $menu wmenu-run
 # Enable auto tiling
 exec_always autotiling
 
+# Restore pywal color scheme on startup (skip sway reload to prevent infinite loop)
+exec wal -R -n -e
+
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
-#
-# Example configuration:
-#
-#   output HDMI-A-1 resolution 1920x1080 position 1920,0
-#
-# You can get the names of your outputs by running: swaymsg -t get_outputs
+output * bg /home/han/Pictures/wallpapers/h2h.jpg fill
+
+# Monitor Eksternal (Sebelah Kiri @ 165Hz)
+output DP-1 mode 1920x1080@165Hz position 0 0
+
+# Monitor Laptop (Sebelah Kanan @ 144Hz)
+output eDP-1 mode 1920x1080@144Hz position 1920 0
 
 ### Idle configuration
 #
@@ -62,6 +68,11 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
       natural_scroll enabled
       middle_emulation enabled
   }
+
+### Gestures
+# Geser 3 jari untuk berpindah workspace secara berurutan numerik (1, 2, 3...)
+bindgesture swipe:3:right exec ~/.config/sway/workspace-swipe.sh prev
+bindgesture swipe:3:left exec ~/.config/sway/workspace-swipe.sh next
 #
 #   input type:keyboard {
 #       xkb_layout "eu"
@@ -228,8 +239,7 @@ bindsym $mod+r mode "resize"
     bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
 
     # Special key to take a screenshot with grim
-    bindsym Print exec grim
-
+    bindsym $mod+Shift+s exec grim -g "$(slurp)" ~/Pictures/Screenshots/screenshot_$(date +'%Y-%m-%d_%H-%M-%S').png
 #
 # Status Bar:
 #
@@ -249,5 +259,14 @@ gaps outer 0
 # Window Border
 default_border pixel 2
 default_floating_border pixel 2
+
+# Window Border Colors (Pywal)
+# class                 border   bground  text     indicator child_border
+client.focused          $color1  $color1  $color0  $color2   $color1
+client.focused_inactive $color8  $color8  $color7  $color8   $color8
+client.unfocused        $color0  $color0  $color7  $color0   $color0
+client.urgent           $color1  $color1  $color0  $color1   $color1
+client.placeholder      $color0  $color0  $color7  $color0   $color0
+client.background       $background
 
 include /etc/sway/config.d/*

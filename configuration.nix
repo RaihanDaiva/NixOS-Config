@@ -3,22 +3,59 @@
 {
   imports =
     [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
+      /etc/nixos/hardware-configuration.nix
     ];
+
+  nixpkgs.config.allowUnfree = true;
+
+  hardware.enableRedistributableFirmware = true;
 
   # ========== Bootloader ==========
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.timeout = 5;
+
+  # Menu tambahan di systemd-boot (CachyOS)
+  boot.loader.systemd-boot.extraEntries = {
+    "cachyos.conf" = ''
+      title CachyOS
+      efi /EFI/cachyos/grubx64.efi
+      sort-key 02_cachyos
+    '';
+  };
+
+  # Otomatisasi tanda tangan Secure Boot setiap generasi baru NixOS di-build
+  system.activationScripts.sbctlSign = {
+    supportsDryActivation = false;
+    text = ''
+      if [ -x ${pkgs.sbctl}/bin/sbctl ]; then
+        ${pkgs.sbctl}/bin/sbctl sign-all 2>/dev/null || true
+        for kernel in /boot/EFI/nixos/*-bzImage.efi; do
+          if [ -f "$kernel" ]; then
+            ${pkgs.sbctl}/bin/sbctl sign -s "$kernel" 2>/dev/null || true
+          fi
+        done
+        ${pkgs.sbctl}/bin/sbctl sign -s /boot/EFI/systemd/systemd-bootx64.efi 2>/dev/null || true
+        ${pkgs.sbctl}/bin/sbctl sign -s /boot/EFI/BOOT/BOOTX64.EFI 2>/dev/null || true
+        ${pkgs.sbctl}/bin/sbctl sign -s /boot/EFI/boot/bootx64.efi 2>/dev/null || true
+      fi
+    '';
+  };
+  
+# Memaksa Intel Alder Lake menggunakan driver audio Legacy HDA (opsi 1)
+boot.extraModprobeConfig = ''
+  options snd-intel-dspcfg dsp_driver=1
+'';
 
   # ========== Networking ========== 
-  networking.hostName = "nixos"; # Sudah diaktifkan
+  networking.hostName = "nixos-han"; # Sudah diaktifkan
   networking.networkmanager.enable = true;
   
   # ========== Time Zone ==========
   time.timeZone = "Asia/Jakarta";
 
   # ========== Virtualisation & Core System ========== 
-  virtualisation.vmware.guest.enable = true;
+  # virtualisation.vmware.guest.enable = true;
   programs.nix-ld.enable = true;
 
   # ========== Users ========== 
@@ -33,23 +70,47 @@
 
   # ========== Programs & GUI ==========
   programs.firefox.enable = true;
+  
+  programs.starship.enable = true;
+
+  programs.sway = {
+    enable = true;
+    wrapperFeatures.gtk = true;
+  };
 
   # # Mengaktifkan sistem X11
-  # services.xserver.enable = true;
+  services.xserver.enable = true;
   
   # # Mengaktifkan LightDM sebagai layar login (Display Manager)
-  # services.xserver.displayManager.lightdm.enable = true;
+  services.xserver.displayManager.lightdm.enable = true;
   
   # # Mengaktifkan Qtile sebagai Window Manager
   # services.xserver.windowManager.qtile.enable = true;
   
+# ================= Audio (PipeWire) =================
+security.rtkit.enable = true; # Diperlukan agar audio tidak delay
+services.pipewire = {
+  enable = true;
+  alsa.enable = true;
+  alsa.support32Bit = true;
+  pulse.enable = true;
+};
+
+# ================= Fonts =================
+fonts.packages = with pkgs; [
+  nerd-fonts.jetbrains-mono
+  nerd-fonts.fira-code
+  
+  noto-fonts
+  noto-fonts-color-emoji
+  noto-fonts-cjk-sans
+];
 
   # ========== System Packages ==========
   environment.systemPackages = with pkgs; [
     vim
     wget
     neovim
-    kitty
     fastfetch
     bat
     git
@@ -59,7 +120,37 @@
     unzip
     lazygit
     nodejs_22
+    waybar
+    obsidian
+    alacritty
+    pywal
+    autotiling
+    pavucontrol
+    pamixer
+    grim
+    slurp
+    thunar
+    sof-firmware
+    alsa-ucm-conf
+    btop
+    cava
+    tty-clock
+    wl-clipboard
+    wdisplays
+    efibootmgr
+    sbctl
+    sbsigntool
+    eza
   ];
+
+  # ================= Aliases =================
+environment.shellAliases = {
+  snrs = "sudo nixos-rebuild switch";
+  ls = "eza --icons";
+
+};
+
+environment.localBinInPath = true;
 
   # ========== Developer Tools (Opsional) ==========
   # environment.systemPackages = with pkgs; [
@@ -71,7 +162,7 @@
   # ];
 
   # ========== Services ========== 
-  services.openssh.enable = true;
+  # services.openssh.enable = true;
   # services.xserver.xkb.layout = "us";
 
   # ========== System State ==========
