@@ -9,6 +9,9 @@
   nixpkgs.config.allowUnfree = true;
 
   hardware.enableRedistributableFirmware = true;
+  
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
 
   # ========== Bootloader ==========
   boot.loader.systemd-boot.enable = true;
@@ -78,8 +81,11 @@ boot.extraModprobeConfig = ''
     wrapperFeatures.gtk = true;
   };
 
+# Aktifkan layanan pembuat thumbnail untuk Thunar
+services.tumbler.enable = true;
+
   # # Mengaktifkan sistem X11
-  services.xserver.enable = true;
+services.xserver.enable = true;
   
   # # Mengaktifkan LightDM sebagai layar login (Display Manager)
   services.xserver.displayManager.lightdm.enable = true;
@@ -95,6 +101,8 @@ services.pipewire = {
   alsa.support32Bit = true;
   pulse.enable = true;
 };
+
+services.blueman.enable = true;
 
 # ================= Fonts =================
 fonts.packages = with pkgs; [
@@ -141,7 +149,24 @@ fonts.packages = with pkgs; [
     sbctl
     sbsigntool
     eza
+    bibata-cursors
+    ffmpegthumbnailer # Preview untuk file video
+    webp-pixbuf-loader # Preview untuk file gambar .webp
+    poppler           # Preview untuk file .pdf
+    pciutils
   ];
+
+# Memastikan aplikasi Wayland & XWayland membaca tema kursor yang sama
+environment.variables = {
+  XCURSOR_THEME = "Bibata-Modern-Classic";
+  XCURSOR_SIZE = "24";
+};
+
+# Dark mode
+environment.variables = {
+  GTK_THEME = "Adwaita:dark";
+  QT_STYLE_OVERRIDE = "adwaita-dark";
+};
 
   # ================= Aliases =================
 environment.shellAliases = {
