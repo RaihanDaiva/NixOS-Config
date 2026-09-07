@@ -12,6 +12,40 @@
   
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
+  
+  hardware.graphics.enable = true;
+  
+  hardware.nvidia = {
+  # Wajib diaktifkan untuk Sway / Wayland
+  modesetting.enable = true;
+
+  # Pengaturan daya (opsional)
+  powerManagement.enable = false;
+  powerManagement.finegrained = false;
+
+  # Gunakan driver resmi (Ampere / RTX 30 Series)
+  open = false;
+
+  # Aktifkan aplikasi GUI NVIDIA Settings
+  nvidiaSettings = true;
+
+  # Pilih versi driver stabil
+  package = config.boot.kernelPackages.nvidiaPackages.stable;
+
+  # Konfigurasi PRIME Offload (Intel + NVIDIA)
+  prime = {
+    offload = {
+      enable = true;
+      enableOffloadCmd = true;
+    };
+
+    # Bus ID disesuaikan dengan hasil 'lspci' Anda:
+    # 00:02.0 -> PCI:0:2:0 (Intel)
+    # 01:00.0 -> PCI:1:0:0 (NVIDIA)
+    intelBusId = "PCI:0:2:0";
+    nvidiaBusId = "PCI:1:0:0";
+  };
+};
 
   # ========== Bootloader ==========
   boot.loader.systemd-boot.enable = true;
@@ -75,10 +109,15 @@ boot.extraModprobeConfig = ''
   programs.firefox.enable = true;
   
   programs.starship.enable = true;
+  programs.bash.blesh.enable = true;
 
   programs.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
+    
+    extraOptions = [
+     "--unsupported-gpu"
+    ];
   };
 
 # Aktifkan layanan pembuat thumbnail untuk Thunar
@@ -156,23 +195,30 @@ fonts.packages = with pkgs; [
     pciutils
   ];
 
-# Memastikan aplikasi Wayland & XWayland membaca tema kursor yang sama
-environment.variables = {
-  XCURSOR_THEME = "Bibata-Modern-Classic";
-  XCURSOR_SIZE = "24";
-};
-
-# Dark mode
-environment.variables = {
-  GTK_THEME = "Adwaita:dark";
-  QT_STYLE_OVERRIDE = "adwaita-dark";
-};
+  # Memastikan aplikasi Wayland & XWayland membaca tema kursor & dark mode yang sama
+  environment.variables = {
+    XCURSOR_THEME = "Bibata-Modern-Classic";
+    XCURSOR_SIZE = "24";
+    GTK_THEME = "Adwaita:dark";
+    QT_STYLE_OVERRIDE = "adwaita-dark";
+  };
 
   # ================= Aliases =================
 environment.shellAliases = {
   snrs = "sudo nixos-rebuild switch";
   ls = "eza --icons";
 
+};
+
+# Path driver NVIDIA
+environment.sessionVariables = {
+  LD_LIBRARY_PATH = "/run/opengl-driver/lib";
+};
+
+
+environment.sessionVariables = {
+  SWAY_UNSUPPORTED_GPU = "1";
+  WLR_NO_HARDWARE_CURSORS = "1"; # Mencegah kursor hilang/glitch pada Wayland + NVIDIA
 };
 
 environment.localBinInPath = true;
@@ -189,6 +235,7 @@ environment.localBinInPath = true;
   # ========== Services ========== 
   # services.openssh.enable = true;
   # services.xserver.xkb.layout = "us";
+  services.xserver.videoDrivers = ["nvidia"];
 
   # ========== System State ==========
   system.stateVersion = "26.05"; 
