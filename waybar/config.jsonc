@@ -1,10 +1,11 @@
 {
   "layer": "top",
+  "height": 40,
   "position": "top",
   "margin-top": 8,
-  "margin-left": 450,
-  "margin-right": 450,
-  "margin-bottom": 0,
+  "margin-left": 650,
+  "margin-right": 650,
+  "margin-bottom": -2,
   "reload_style_on_change": true,
 
   "modules-left": [
@@ -35,16 +36,16 @@
       "3": [],
       "4": [],
       "5": [],
-      "6": [],
-      "7": [],
-      "8": [],
-      "9": []
+      // "6": [],
+      // "7": [],
+      // "8": [],
+      // "9": []
     },
     "format": "{name}"
   },
 
   "clock": {
-    "format": "{:%A %H:%M}",
+    "format": "{:%H:%M}",
     "format-alt": "{:%A, %B %d, %Y}",
     "tooltip-format": "<tt><small>{calendar}</small></tt>"
   },

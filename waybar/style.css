@@ -1,7 +1,7 @@
 @import url("/home/han/.cache/wal/colors-waybar.css");
 
 * {
-  font-size: 14px;
+  /* font-size: 14px; */
   font-weight: bold;
   font-family: Spleen, JetBrains Mono Nerd Font, monospace;
   color: @color7;
@@ -9,7 +9,7 @@
 
 window#waybar {
   background-color: rgba(19, 25, 16, 0.99);
-  border-radius: 10px;
+  border-radius: 15px;
   color: @color7;
 }
 
@@ -32,7 +32,7 @@ window#waybar {
 
 /* OS Logo */
 #custom-os {
-  font-size: 16px;
+  font-size: 20px;
   color: @color1;
   margin-right: 14px;
 }
@@ -50,6 +50,10 @@ window#waybar {
   color: @color7;
   opacity: 1.0;
   transition: all 0.2s ease;
+}
+
+#workspaces button label {
+  font-size: 16px;
 }
 
 /* 2. Workspace kosong / tidak ada aplikasi */
@@ -76,19 +80,34 @@ window#waybar {
 
 /* Clock */
 #clock {
-  font-size: 14px;
+  font-size: 18px;
   font-weight: bold;
   color: @color7;
 }
 
 /* Right Status Modules */
-#wireplumber,
-#network,
-#bluetooth,
+#wireplumber {
+  margin-left: 14px;
+  margin-right: 6px;
+  font-size: 18px;
+}
+
+#network {
+  margin-left: 14px;
+  margin-right: 6px;
+  font-size: 18px;
+}
+
+#bluetooth {
+  margin-left: 14px;
+  margin-right: 6px;
+  font-size: 18px;
+}
+
 #battery {
   margin-left: 14px;
-  margin-right: 4px;
-  font-size: 15px;
+  margin-right: 6px;
+  font-size: 18px;
   color: @color7;
   transition: all 0.2s ease;
 }
