@@ -211,6 +211,7 @@ fonts.packages = with pkgs; [
     webp-pixbuf-loader # Preview untuk file gambar .webp
     poppler           # Preview untuk file .pdf
     pciutils
+    rofi
   ];
 
   # Memastikan aplikasi Wayland & XWayland membaca tema kursor & dark mode yang sama

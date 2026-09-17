@@ -26,7 +26,7 @@ set $folder thunar
 font pango:Spleen 12
 
 # Your preferred application launcher
-set $menu wmenu-run
+set $menu rofi -show drun -theme ~/.config/rofi/app-launcher.rasi
 
 # Atur kursor di Sway
 seat * xcursor_theme Bibata-Modern-Classic 24
@@ -51,8 +51,8 @@ exec wal -R -n -e
 
 ### Output configuration
 #
-# Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /home/han/Pictures/wallpapers/jiwoo.jpg fill
+# Default wallpaper (pointed to current wallpaper cache)
+output * bg /home/han/.cache/current_wallpaper.jpg fill
 
 # Monitor Eksternal (Sebelah Kiri @ 165Hz)
 output DP-1 mode 1920x1080@165Hz position 0 0
@@ -113,6 +113,7 @@ bindgesture swipe:3:left exec ~/.config/sway/workspace-swipe.sh next
     bindsym $mod+q kill
 
     # Start your launcher
+    bindsym $mod+a exec $menu
     bindsym $mod+d exec $menu
 
     # Drag floating windows by holding down $mod and left mouse button.
@@ -182,9 +183,11 @@ bindgesture swipe:3:left exec ~/.config/sway/workspace-swipe.sh next
 # Layout stuff:
 #
 
+    # Wallpaper selector via Rofi
+    bindsym $mod+w exec bash ~/.config/rofi/wallpaper-select.sh
+    
     # Switch the current container between different layout styles
-    bindsym $mod+s layout stacking
-    bindsym $mod+w layout tabbed
+    bindsym $mod+s layout tabbed
 
     # Make the current focus fullscreen
     bindsym $mod+f fullscreen
@@ -196,11 +199,11 @@ bindgesture swipe:3:left exec ~/.config/sway/workspace-swipe.sh next
     bindsym $mod+space focus mode_toggle
 
     # Move focus to the parent container
-    bindsym $mod+a focus parent
+    # bindsym $mod+a focus parent
 #
-# Scratchpad:
+# Resizing containers:
 #
-    # Sway has a "scratchpad", which is a bag of holding for windows.
+mode "resize" {
     # left will shrink the containers width
     # right will grow the containers width
     # up will shrink the containers height

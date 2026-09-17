@@ -1,0 +1,100 @@
+@import "~/.cache/wal/colors-rofi-dark.rasi"
+
+configuration {
+    modi: "dmenu";
+    show-icons: true;
+    display-dmenu: " ";
+}
+
+* {
+    font: "JetBrains Mono Nerd Font 10";
+}
+
+window {
+    width: 550px;
+    height: 480px;
+    border: 2px solid;
+    border-color: @selected-normal-background;
+    // border-radius: 12px;
+    background-color: @background;
+    padding: 20px;
+    location: south;
+    anchor: south;
+    margin: 0px 0px 10px 0px;
+}
+
+mainbox {
+    spacing: 15px;
+    children: [ inputbar, listview ];
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+}
+
+inputbar {
+    spacing: 8px;
+    padding: 8px 12px;
+    background-color: @normal-background;
+    border-radius: 8px;
+    children: [ prompt, entry ];
+}
+
+prompt {
+    text-color: @foreground;
+    background-color: transparent;
+}
+
+entry {
+    text-color: @foreground;
+    background-color: transparent;
+    placeholder: "Search Wallpaper";
+    placeholder-color: @active-background;
+}
+
+listview {
+    columns: 4;
+    lines: 2;
+    cycle: true;
+    scrollbar: false;
+    layout: vertical;
+    spacing: 12px;
+    border: 0;
+    padding: 5px 0 0 0;
+    background-color: transparent;
+}
+
+element {
+    orientation: vertical;
+    padding: 10px;
+    border-radius: 8px;
+    spacing: 6px;
+    background-color: transparent;
+}
+
+element.normal.normal {
+    background-color: transparent;
+    text-color: @foreground;
+}
+
+element.selected.normal {
+    background-color: @selected-normal-background;
+    text-color: @selected-normal-foreground;
+}
+
+element.alternate.normal {
+    background-color: transparent;
+    text-color: @foreground;
+}
+
+element-icon {
+    size: 110px;
+    horizontal-align: 0.5;
+    background-color: transparent;
+}
+
+element-text {
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
+    background-color: transparent;
+    text-color: inherit;
+}
