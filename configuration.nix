@@ -119,6 +119,24 @@ boot.extraModprobeConfig = ''
      "--unsupported-gpu"
     ];
   };
+  
+ # Aktifkan Zsh dan Oh My Zsh
+programs.zsh = {
+  enable = true;
+  autosuggestions.enable = true;
+  syntaxHighlighting.enable = true;
+  ohMyZsh = {
+    enable = true;
+    theme = "agnoster"; # Ganti dengan: "agnoster", "af-magic", "jonathan", dll.
+    plugins = [
+      "git"
+      "sudo"
+    ];
+  };
+};
+
+# Set Zsh sebagai default shell untuk user Anda
+users.users.han.shell = pkgs.zsh; 
 
 # Aktifkan layanan pembuat thumbnail untuk Thunar
 services.tumbler.enable = true;
