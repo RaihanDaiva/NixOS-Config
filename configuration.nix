@@ -212,6 +212,8 @@ fonts.packages = with pkgs; [
     poppler           # Preview untuk file .pdf
     pciutils
     rofi
+    yazi
+    kitty
   ];
 
   # Memastikan aplikasi Wayland & XWayland membaca tema kursor & dark mode yang sama

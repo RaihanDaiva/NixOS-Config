@@ -55,6 +55,16 @@ if pgrep -x "waybar" >/dev/null; then
   pkill -SIGUSR2 waybar 2>/dev/null || true
 fi
 
+# 9. Reload Kitty jika sedang berjalan
+if pgrep -x "kitty" >/dev/null; then
+  pkill -USR1 kitty 2>/dev/null || true
+fi
+
+# 10. Reload Foot jika sedang berjalan
+if pgrep -x "foot" >/dev/null; then
+  pkill -USR1 foot 2>/dev/null || true
+fi
+
 # 9. Kirim notifikasi desktop
 if command -v notify-send >/dev/null 2>&1; then
   notify-send "Wallpaper Changed" "$SELECTED_FILE" -i "$FULL_PATH"

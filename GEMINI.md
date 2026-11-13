@@ -15,6 +15,8 @@
 - `sway/`: Berisi `config` untuk keybinding, layout, gesture touchpad, gaps, border, dan script utilitas seperti `workspace-swipe.sh`. Terhubung via symlink ke `~/.config/sway/`.
 - `waybar/`: Berisi konfigurasi modul (`config.jsonc`) dan stylesheet (`style.css`) untuk taskbar Waybar. Terhubung via symlink ke `~/.config/waybar/`.
 - `alacritty/`: Konfigurasi emulator terminal (`alacritty.toml`) dengan integrasi warna Pywal. Terhubung via symlink ke `~/.config/alacritty/`.
+- `kitty/`: Konfigurasi emulator terminal (`kitty.conf`) dengan integrasi warna Pywal. Terhubung via symlink ke `~/.config/kitty/`.
+- `foot/`: Konfigurasi emulator terminal (`foot.ini`) dengan integrasi warna Pywal. Terhubung via symlink ke `~/.config/foot/`.
 - `rofi/`: Berisi skrip wallpaper selector (`wallpaper-select.sh`) dan tema grid (`wallpaper-select.rasi`). Terhubung via symlink ke `~/.config/rofi/`.
 - `wal/`: Berisi template kustom Pywal (seperti `wal/templates/starship.toml`) yang diproses otomatis ke `~/.cache/wal/`.
 
